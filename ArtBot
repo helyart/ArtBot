@@ -40,7 +40,7 @@ def social(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("Подпишитесь на нас в социальных сетях:", reply_markup=reply_markup)
 
 def main() -> None:
-    updater = Updater("YOUR_TOKEN")
+    updater = Updater("6720655797:AAF8uCP52byBXR9r3-khE9YeWvdMmr9T3gU")
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("start", start))
