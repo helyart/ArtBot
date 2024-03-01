@@ -1,0 +1,57 @@
+from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+# Обработчик команды /start
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Добро пожаловать в бота One Palette!\nЧтобы получить помощь и список доступных команд, введите /help.')
+
+# Обработчик команды /help
+def help(update: Update, context: CallbackContext) -> None:
+    help_message = """Список доступных команд:
+    /start - Начать общение с ботом One Palette.
+    /help - Получить помощь и список доступных команд.
+    /events - Получить информацию о предстоящих мероприятиях и мастер-классах.
+    /order_event - Заказать мастер-класс на свое мероприятие.
+    /schedule - Получить расписание занятий и мастер-классов.
+    /signup - Записаться на бесплатную консультацию.
+    /materials - Получить информацию о необходимых материалах и инструментах.
+    /discounts - Показать доступные скидки и специальные предложения.
+    /contact - Связаться с администратором студии.
+    /feedback - Оставить отзыв или предложение.
+    /about - Показать информацию о студии и ее историю.
+    /social - Показать ссылки на социальные сети студии."""
+    update.message.reply_text(help_message)
+
+# Обработчик команды /events
+def events(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Полный список мастер-классов, которые проходят в студии, вы можете узнать на нашем сайте: https://one-palette-artstudio.online/')
+
+# Добавьте обработчики для остальных команд по аналогии с вышеуказанным
+
+def social(update: Update, context: CallbackContext) -> None:
+    keyboard = [
+        [
+            InlineKeyboardButton("Вконтакте", url="https://vk.com/one_palette_artstudio"),
+            InlineKeyboardButton("Инстаграм", url="https://www.instagram.com/one_palette_artstudio?igshid=aXNqaHJuZzdqbHUz0")
+        ],
+        [InlineKeyboardButton("Телеграм", url="https://t.me/one_palette_artstudio")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text("Подпишитесь на нас в социальных сетях:", reply_markup=reply_markup)
+
+def main() -> None:
+    updater = Updater("YOUR_TOKEN")
+    dispatcher = updater.dispatcher
+
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("events", events))
+    # Добавьте обработчики для остальных команд
+
+    dispatcher.add_handler(CommandHandler("social", social))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
